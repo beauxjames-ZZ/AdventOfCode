@@ -9,19 +9,24 @@ namespace AdventOfCode
         {
             
             GoDay1();
+            GoDay2();
 
             Console.ReadKey();
         }
 
-        static void GoDay1()
+        private static void GoDay2()
         {
-            Console.WriteLine("Day1 - " + Day1.Title + "\n");
-            
-            Console.WriteLine("\tPart One :: " + Day1.CheckSantasFloor());
-            foreach (var moo in Day1.CheckBasementPosition().Where(x => x.Key < 0))
-            {
-                Console.WriteLine("\tPart Two :: " + moo.Value);
-            }
+            //Day2.QuickTest();
+            Console.WriteLine("\n" + Day2.Title + "\n");
+            Console.WriteLine("\tPart One :: " + Day2.GetTotalWrappingPaper() + " sq/ft Wrapping Paper");
+            Console.WriteLine("\tPart Two :: " + Day2.GetTotalRibbon() + " ft Ribbon");
+        }
+
+        private static void GoDay1()
+        {
+            Console.WriteLine("\n" + Day1.Title + "\n");
+            Console.WriteLine("\tPart One :: " + Day1.CheckSantasFloor() + " Floor");
+            Console.WriteLine("\tPart Two :: " + Day1.CheckBasementPosition().First(x => x.Key < 0).Value + " Position");
         }
 
     }

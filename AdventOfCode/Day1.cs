@@ -5,7 +5,7 @@ namespace AdventOfCode
 {
     public static class Day1
     {
-        public static string Title { get; } = "Not quite LISP";
+        public static string Title { get; } = "--- Day 1: Not Quite Lisp ---";
         private static char UpString { get; } = (char)40;
         private static char DownString { get; } = (char)41;
         private static string Input { get; set; } =
@@ -24,7 +24,7 @@ namespace AdventOfCode
             {
                 currentFloor = currentFloor + MoveSanta(Input[i]);
                 yield return new KeyValuePair<int, int>(currentFloor, i + 1);
-                if (currentFloor == -1) break;
+                //if (currentFloor == -1) break;
             }
         }
 
