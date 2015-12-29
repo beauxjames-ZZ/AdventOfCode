@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AdventOfCode
 {
-    public static class Day3
+    public class Day3
     {
         public static string Title = "--- Day 3: Perfectly Spherical Houses in a Vacuum ---";
         public static char[] NavigationalData => File.ReadAllText(@"data\Day3_HousingGrid.txt").ToCharArray();
@@ -15,47 +15,79 @@ namespace AdventOfCode
         private static char Left { get; } = (char) 60 /*"<"*/;
         private static char Right { get; } = (char) 62 /*">"*/;
 
-        public static int HousesWithAtLeastOnePresent()
+        public int LaSanta { get; set; } = 0;
+        public int LoSanta { get; set; } = 0;
+        public int LaRobot { get; set; } = 0;
+        public int LoRobot { get; set; } = 0;
+        public List<House> Houses { get; set; } = new List<House>(); 
+
+        public int HousesWithAtLeastOnePresent()
         {
-            return Navigate(NavigationalData).Count;
+            NavigateSanta(NavigationalData);
+            return Houses.Count;
         }
 
-        public static void QuickTest()
+        public int HousesWithAtLeastOnePresentForSantaAndRobot()
         {
-            Console.WriteLine(Navigate(new char[] { (char) 62 }).Count);
-            Console.WriteLine(Navigate("^>v<".ToCharArray()).Count);
-            Console.WriteLine(Navigate("^v^v^v^v^v".ToCharArray()).Count);
-            foreach (var house in Navigate("^v^v^v^v^v".ToCharArray()))
+            NavigateSantaRobot(NavigationalData);
+            return Houses.Count;
+        }
+
+        public void QuickTest()
+        {
+/*
+            Console.WriteLine(NavigateSanta(new char[] { (char) 62 }).Count);
+            Console.WriteLine(NavigateSanta("^>v<".ToCharArray()).Count);
+            Console.WriteLine(NavigateSanta("^v^v^v^v^v".ToCharArray()).Count);
+            foreach (var house in NavigateSanta("^v^v^v^v^v".ToCharArray()))
             {
                 Console.WriteLine("House Presents :: " + house.Presents);
+            }*/
+        }
+
+        public void NavigateSanta(char[] navigationalData)
+        {
+            foreach (var action in navigationalData)
+            {
+                MakeMove(action, false);
             }
         }
 
-        public static List<House> Navigate(char[] navigationalData)
+        public void NavigateSantaRobot(char[] navigationalData)
         {
-            var houses = new List<House> { new House(0, 0) };
-            var la = 0;
-            var lo = 0;
+            var isRobot = false;
 
             foreach (var action in navigationalData)
             {
-                la = action.Equals(Up) ? la + 1 : action.Equals(Down) ? la - 1 : la;
-                lo = action.Equals(Right) ? lo + 1 : action.Equals(Left) ? lo - 1 : lo;
+                MakeMove(action, isRobot);
+                isRobot = !isRobot;
+            }
+        }
 
-                var thisHouse = houses.FirstOrDefault(h => h.Lat == la && h.Long == lo);
+        private void MakeMove(char action, bool isRobot)
+        {
+            var la = isRobot ? LaRobot : LaSanta;
+            var lo = isRobot ? LoRobot : LoSanta;
 
-                if (thisHouse != null)
-                {
-                    thisHouse.Hit();
-                }
-                else
-                {
-                    houses.Add(new House(la, lo));
-                }
+            la = action.Equals(Up) ? la + 1 : action.Equals(Down) ? la - 1 : la;
+            lo = action.Equals(Right) ? lo + 1 : action.Equals(Left) ? lo - 1 : lo;
+
+            var thisHouse = Houses.FirstOrDefault(h => h.Lat == la && h.Long == lo);
+
+            if (thisHouse != null)
+            {
+                thisHouse.Hit();
+            }
+            else
+            {
+                Houses.Add(new House(la, lo));
             }
 
-            return houses;
-        }
+            LaSanta = isRobot ? LaSanta : la;
+            LoSanta = isRobot ? LoSanta : lo;
+            LaRobot = isRobot ? la : LaRobot;
+            LoRobot = isRobot ? lo : LoRobot;
+        } 
     }
 
     public class House

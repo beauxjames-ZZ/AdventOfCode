@@ -17,9 +17,15 @@ namespace AdventOfCode
 
         private static void GoDay3()
         {
+            var day3 = new Day3();
             Console.WriteLine("\n" + Day3.Title + "\n");
-            //Day3.QuickTest();
-            Console.WriteLine("\tPart One :: " + Day3.HousesWithAtLeastOnePresent() + " Houses with at least one present");
+            day3.HousesWithAtLeastOnePresent();
+            Console.WriteLine("\tPart One :: " + day3.Houses.Count + " Houses with at least one present with just Santa.");
+
+            day3 = new Day3();
+            Console.WriteLine("\n" + Day3.Title + "\n");
+            day3.HousesWithAtLeastOnePresentForSantaAndRobot();
+            Console.WriteLine("\tPart One :: " + day3.Houses.Count + " Houses with at least one present Santa and Robot.");
         }
 
         private static void GoDay2()
