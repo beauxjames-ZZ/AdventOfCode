@@ -7,12 +7,32 @@ namespace AdventOfCode
     {
         static void Main(string[] args)
         {
-            
+
             /*GoDay1();
-            GoDay2();*/
+            GoDay2();
             GoDay3();
+            GoDay4();*/
+            GoDay5();
 
             Console.ReadKey();
+        }
+
+        private static void GoDay5()
+        {
+            var day5 = new Day5();
+            Console.WriteLine("\n" + Day5.Title + "\n");
+            //day5.Test();
+            Console.WriteLine(day5.NiceStringCount() + " nice strings");
+        }
+
+        private static void GoDay4()
+        {
+            var day4 = new Day4();
+            Console.WriteLine(("\n" + Day4.Title + "\n"));
+            //day4.Md5Test();
+            //day4.GetSantaHash("abcdef", 5);
+            //day4.GetSantaHash("pqrstuv", 5);
+            day4.GetSantaHash("yzbqklnj", 6);
         }
 
         private static void GoDay3()
